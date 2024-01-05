@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ExpenseFrom from "./components/ExpenseFrom";
-import ExpenseItem from "./components/ExpenseItem";
+import Expenses from "./components/Expenses";
+
 
 function App() {
    
@@ -43,14 +44,8 @@ const handleAddExpense = (expenses) =>{
     <>
     <div>I am App</div>
     <ExpenseFrom addExpense={handleAddExpense}/>
-    {expenses.map((expenses) =>{
-      return <ExpenseItem expenses={expenses}></ExpenseItem>
-    }
-   )}
-   {/* <ExpenseItem expenses={expenses[0]}></ExpenseItem>
-    <ExpenseItem expenses={expenses[1]}></ExpenseItem>
-    <ExpenseItem expenses={expenses[2]}></ExpenseItem>
-  <ExpenseItem expenses={expenses[3]}></ExpenseItem> */}
+    <Expenses expenses={expenses} />
+   
    </>
   );
 }
