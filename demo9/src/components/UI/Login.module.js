@@ -1,4 +1,4 @@
-import classes from "./Login.module.css";
+import classes from "../CSS/Login.module.css";
 import Card from "./Card.module";
 import { useEffect, useReducer, useState } from "react";
 import Button from "./Button.module";

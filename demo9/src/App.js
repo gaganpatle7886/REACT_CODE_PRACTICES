@@ -1,10 +1,12 @@
 
 import './App.css';
 import MainHeader from './components/MainHeader.module';
-import Login from './components/Login.module';
-import {useEffect , useState } from 'react';
-import Home from './components/Home.module';
+import Login from './components/UI/Login.module';
+import {createContext, useEffect , useState} from 'react';
+import Home from './components/UI/Home.module';
 
+
+export const UserContext = createContext();
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,14 +30,22 @@ function App() {
   };
 
   
+
   return (
-    <div>
-     
+   < UserContext.Provider value={isLoggedIn}>
+      <div>
+      <MainHeader onLagout={logoutHandler} /> 
+      {!isLoggedIn && <Login onLogin={loginHandler} onLagout={logoutHandler} /> }
+      {isLoggedIn && <Home/> }
+    </div> 
+    </UserContext.Provider>
+ );
+{/*<div>
       <MainHeader  isLoggedIn ={isLoggedIn} onLagout={logoutHandler} /> 
       {!isLoggedIn && <Login onLogin={loginHandler} onLagout={logoutHandler} /> }
       {isLoggedIn && <Home/> }
-   </div>
-  );
+  </div>  */}
+ 
 }
 
 export default App;

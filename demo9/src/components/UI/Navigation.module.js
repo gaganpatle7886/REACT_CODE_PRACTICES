@@ -1,4 +1,4 @@
-import classes from "./Navigation.module.css";
+import classes from '../CSS/Navigation.module.css';
 
 function Navigation(props) {
     return (
