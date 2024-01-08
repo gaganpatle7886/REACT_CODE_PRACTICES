@@ -2,50 +2,21 @@
 import './App.css';
 import MainHeader from './components/MainHeader.module';
 import Login from './components/UI/Login.module';
-import {createContext, useEffect , useState} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Home from './components/UI/Home.module';
+import AuthContext from './components/context/auth-context';
 
 
-export const UserContext = createContext();
+
 function App() {
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect = (()  =>  {
-  const temp = localStorage.getItem("isLoggedIn");
-  console.log(temp);
-  if(temp === "1") {
-    setIsLoggedIn(true);
-  }
-  }, []);
-
-  const loginHandler = (eamil, password) => {
-    localStorage.setItem("isLoggedIn", "1");
-    setIsLoggedIn(true);
-  };
-  
-  const logoutHandler = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
-  };
-
-  
-
+  const authContext = useContext(AuthContext);
   return (
-   < UserContext.Provider value={isLoggedIn}>
-      <div>
-      <MainHeader onLagout={logoutHandler} /> 
-      {!isLoggedIn && <Login onLogin={loginHandler} onLagout={logoutHandler} /> }
-      {isLoggedIn && <Home/> }
-    </div> 
-    </UserContext.Provider>
- );
-{/*<div>
-      <MainHeader  isLoggedIn ={isLoggedIn} onLagout={logoutHandler} /> 
-      {!isLoggedIn && <Login onLogin={loginHandler} onLagout={logoutHandler} /> }
-      {isLoggedIn && <Home/> }
-  </div>  */}
- 
+    <>
+      <MainHeader/>
+      {!authContext.isLoggedIn && <Login/>}
+      {authContext.isLoggedIn && <Home/>}
+    </>
+  );
 }
 
 export default App;

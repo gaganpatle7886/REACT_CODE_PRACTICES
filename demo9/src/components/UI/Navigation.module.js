@@ -1,6 +1,9 @@
 import classes from '../CSS/Navigation.module.css';
+import AuthContext from '../context/auth-context';
+import { useContext } from 'react';
 
 function Navigation(props) {
+    const authContext = useContext(AuthContext);
     return (
         <nav className={classes.nav}>
             <ul>
@@ -11,7 +14,7 @@ function Navigation(props) {
                     <a href="/">Admin</a>
                 </li>
                 <li>
-                <button onClick={props.onLogout}>Logout</button>
+                <button onClick={authContext.onLogout}>Logout</button>
                 </li>
             </ul>
         </nav>

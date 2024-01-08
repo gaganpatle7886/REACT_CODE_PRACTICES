@@ -1,19 +1,19 @@
 import classes from "../CSS/Login.module.css";
 import Card from "./Card.module";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useState, useContext } from "react";
 import Button from "./Button.module";
+import AuthContext from "../context/auth-context";
 
 //const [state, dispatchFn] = useReducer (reducerFn, initialState, initFn);
 
 const emailReducer = (state, action) => {
 
-    if (action.type === "USER_INPUT")  {
-        console.log("USER_INPUT");
-        return { value: action.val, isValid:action.val.includes("@") };
+    if (action.type === "USER_INPUT") {
+        return { value: action.val, isValid: action.val.includes("@") };
     }
 
-    if (action.type === "INPUT_BLUR")  {
-        return { value: state.value, isValid:state.value.includes("@") };
+    if (action.type === "INPUT_BLUR") {
+        return { value: state.value, isValid: state.value.includes("@") };
     }
     return { value: "", isValid: null }
 };
@@ -21,8 +21,8 @@ const emailReducer = (state, action) => {
 
 const passwordReducer = (state, action) => {
 
-    if (action.type === 'USER_INPUT')  {
-    
+    if (action.type === 'USER_INPUT') {
+
         return { value: action.val, isValid: action.val.length > 7 };
     }
 
@@ -35,11 +35,14 @@ const passwordReducer = (state, action) => {
 
 
 function Login(props) {
-    // const [enteredEmail, setEnteredEmail] = useState("");
-    // const [emailIsValid, setEmailValid] = useState();
 
-    //  const [enteredPassword, setEnteredPassword] = useState("");
-    //  const [passwordIsValid, setPasswordIsValid] = useState();
+    const authContext = useContext(AuthContext);
+
+    const [enteredEmail, setEnteredEmail] = useState("");
+    const [emailIsValid, setEmailValid] = useState();
+
+    const [enteredPassword, setEnteredPassword] = useState("");
+    const [passwordIsValid, setPasswordIsValid] = useState();
 
     const [FormIsValid, setFormIsValid] = useState(false);
 
@@ -53,21 +56,21 @@ function Login(props) {
         isValid: null,
     });
 
-    // useEffect(() => {
-    //    console.log("useEffect");
+    useEffect(() => {
+        console.log("useEffect");
 
-    //  const timer =  setTimeout(() =>{
-    //       console.log("inside Timeout")
-    //  setFormIsValid(
-    //  enteredEmail.includes('@') && enteredPassword.trim().length > 7 
-    //  );
-    //    }, 500);
+        const timer = setTimeout(() => {
+            console.log("inside Timeout");
+            setFormIsValid(
+                emailState.isValid && passwordState.isValid
+            );
+        }, 500);
 
-    //  return () => {
-    //     console.log("CLEAN UP");
-    //   clearTimeout(timer);
-    // };
-    //   },[enteredEmail,enteredPassword]);
+        return () => {
+            console.log("CLEAN UP");
+            clearTimeout(timer);
+        };
+    }, [emailState, passwordState]);
 
     const emailChangeHandler = (event) => {
 
@@ -77,9 +80,9 @@ function Login(props) {
         // console.log("emailChangeHandler",event.target.value);
 
 
-        setFormIsValid(
-            event.target.value.includes('@') && passwordState.value.trim().length > 7
-        );
+    //    setFormIsValid(
+      //      event.target.value.includes('@') && passwordState.value.trim().length > 7
+       // );
     };
 
     const passwordChangeHandler = (event) => {
@@ -87,8 +90,9 @@ function Login(props) {
         dispatchPassword({ type: "USER_INPUT", val: event.target.value });
         // console.log("passwordChangeHandler",event.target.value);
 
-       setFormIsValid(
-            emailState.value.includes('@') && event.target.value.trim().length > 7);
+        // setFormIsValid(
+        //   emailState.value.includes('@') && event.target.value.trim().length > 7
+        //);
     };
 
     const validateEmailHandler = () => {
@@ -103,7 +107,7 @@ function Login(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        props.onLogin(emailState.value, passwordState.value);
+        authContext.onLogin(emailState.value, passwordState.value);
     };
 
     return (
