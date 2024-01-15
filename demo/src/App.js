@@ -1,5 +1,8 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+
+import React from "react";
+
 
 function App() {
   const displayAlert = (message) =>{
@@ -20,5 +23,6 @@ function App() {
         </div>
   );
 }
-
+  
+ 
 export default App;
